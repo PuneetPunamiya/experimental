@@ -170,7 +170,7 @@ func (s *SyncService) updateResources(job model.SyncJob, repo git.Repo, res []gi
 			for _, t := range v.Tags {
 				tag := model.Tag{Name: t, CategoryID: others.ID}
 
-				txn.Model(&model.Tag{}).Where(&model.Tag{Name: t}).FirstOrCreate(&tag)
+				txn.Model(&model.Tag{}).Where(&model.Tag{Name: strings.TrimSpace(t)}).FirstOrCreate(&tag)
 
 				resTag := model.ResourceTag{ResourceID: dbRes.ID, TagID: tag.ID}
 				txn.Model(&model.ResourceTag{}).Where(&resTag).FirstOrCreate(&resTag)
